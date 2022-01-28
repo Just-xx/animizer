@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/base.astro'
+import Background from '../../components/Background.jsx'
+import Animal from '../../components/Animal.jsx'
+
+const { animal } = Astro.request.params;
+
+export async function getStaticPaths() {
+  const animals = ['dog', 'axolotl', 'cat']
+
+  return animals.map(animal => ({
+	  params: { animal }
+  }))
+}
+
+
+---
+<Base title={`Animizer. - your random ${animal}`}>
+	<Background>
+		<Animal client:load animal={animal}>
+	</Background>
+</Base>

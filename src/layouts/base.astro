@@ -1,0 +1,34 @@
+---
+import Logo from '../components/Logo.jsx';
+
+const {title} = Astro.props;
+---
+    
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>{title}</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+	<style global lang="scss">
+		@import "../styles/global.scss";
+	</style>
+	<style>
+		.main-wrapper {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-end;
+			min-height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<Logo />
+	<div class="main-wrapper">
+        <slot />
+	</div>
+</body>
+</html>

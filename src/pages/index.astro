@@ -1,20 +1,10 @@
 ---
-let title = 'Animizer.';
+import Base from '../layouts/base.astro'
+import Background from '../components/Background.jsx'
+import StarterSection from '../components/StartSection.jsx'
 ---
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>{title}</title>
-
-	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-	<style global lang="scss">
-		@import "../styles/global.scss";
-	</style>
-</head>
-<body>
-	<main>
-
-	</main>
-</body>
-</html>
+<Base title="Animizer.">
+	<Background>
+		<StarterSection />
+	</Background>
+</Base>
