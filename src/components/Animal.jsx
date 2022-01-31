@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 
 const Animal = ({ animal }) => {
   const [loaded, setLoaded] = useState(false);
-  const { imgUrl, isFetched, newImg, error } = useAnimal(animal);
+  const { imgUrl, isFetched, newImg, error, isVideo } = useAnimal(animal);
 
   return (
     <div
@@ -23,11 +23,18 @@ const Animal = ({ animal }) => {
       {error && <div className={styles.fetchError}>Unable to get image :(</div>}
       {isFetched && (
         <>
-          <img
-            className={styles.animalImg}
-            src={imgUrl}
-            alt={animal}
-          />
+
+          {
+            !isVideo ?
+            <img
+              className={styles.animalImg}
+              src={imgUrl}
+              alt={animal}
+            /> :
+            <video className={styles.animalImg} controls>
+              <source src={imgUrl} type="video/mp4" />
+            </video>
+          }
           <div className={styles.btns}>
               <Button to={imgUrl}>Download</Button>
               <Button onClick={() => {newImg(); setLoaded(false)}}>Next</Button>

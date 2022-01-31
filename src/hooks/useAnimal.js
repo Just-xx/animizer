@@ -1,35 +1,35 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 
-const corsOn = true;
-const cors = url => {
-    if (corsOn)
-        return 'https://cors-anywhere.herokuapp.com/' + url;
-    else
-        return url;
-} 
-
 const AXOLOTL_API = 'https://axoltlapi.herokuapp.com/';
-const DOG_API = 'https://place.dog/300/200';
+const DOG_API = 'https://random.dog/woof.json';
 const CAT_API = 'https://api.thecatapi.com/v1/images/search';
 
 
 
 const getAxolotl = async (setUrl, setIsFetched) => {
-    const res = await axios.get(cors(AXOLOTL_API));
+    const res = await axios.get(AXOLOTL_API);
     setUrl(res.data.url);
     setIsFetched(true);
 }
 
 const getCat = async (setUrl, setIsFetched) => {
-    const res = await axios.get(cors(CAT_API));
+    const res = await axios.get(CAT_API);
     setUrl(res.data[0].url);
     setIsFetched(true);
 }
 
-const getDog = async (setUrl, setIsFetched) => {
-    setUrl(DOG_API);
+const getDog = async (setUrl, setIsFetched, setIsVideo) => {
+    const res = await axios.get(DOG_API);
+    setUrl(res.data.url);
+    checkForVideo(res.data.url, setIsVideo)
     setIsFetched(true);
+}
+
+
+const checkForVideo = (url, setIsVideo) => {
+    if (url.endsWith('.mp4'))
+        setIsVideo(true)
 }
 
 export const useAnimal = (animal) => {
@@ -37,12 +37,15 @@ export const useAnimal = (animal) => {
     const [imgUrl, setImgUrl] = useState(null);
     const [isFetched, setIsFetched] = useState(false);
     const [error, setError] = useState(false);
+    const [isVideo, setIsVideo] = useState(false);
+
+
 
     const getImg = async () => {
         try {
             switch (animal) {
                 case 'axolotl': await getAxolotl(setImgUrl, setIsFetched); break;
-                case 'dog': await getDog(setImgUrl, setIsFetched); break;
+                case 'dog': await getDog(setImgUrl, setIsFetched, setIsVideo); break;
                 case 'cat': await getCat(setImgUrl, setIsFetched); break;
             }
         }
@@ -54,6 +57,7 @@ export const useAnimal = (animal) => {
     const newImg = () => {
         setError(false);
         setIsFetched(false);
+        setIsVideo(false)
         getImg();
     }
 
@@ -63,6 +67,7 @@ export const useAnimal = (animal) => {
         imgUrl,
         isFetched,
         newImg,
-        error
+        error,
+        isVideo
     };
 }
