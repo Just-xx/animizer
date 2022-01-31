@@ -1,49 +1,59 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 
+const corsOn = true;
 const cors = url => {
-    return 'https://cors-anywhere.herokuapp.com/' + url;
+    if (corsOn)
+        return 'https://cors-anywhere.herokuapp.com/' + url;
+    else
+        return url;
 } 
 
 const AXOLOTL_API = 'https://axoltlapi.herokuapp.com/';
 const DOG_API = 'https://place.dog/300/200';
 const CAT_API = 'https://api.thecatapi.com/v1/images/search';
 
-const getAxolotl = async (setUrl, setLoaded) => {
+
+
+const getAxolotl = async (setUrl, setIsFetched) => {
     const res = await axios.get(cors(AXOLOTL_API));
     setUrl(res.data.url);
-    setLoaded(true);
+    setIsFetched(true);
 }
 
-const getCat = async (setUrl, setLoaded) => {
+const getCat = async (setUrl, setIsFetched) => {
     const res = await axios.get(cors(CAT_API));
-    console.log('aaa')
     setUrl(res.data[0].url);
-    setLoaded(true);
+    setIsFetched(true);
 }
 
-const getDog = async (setUrl, setLoaded) => {
-    const res = await axios.get(cors(DOG_API));
-    console.log(res)
-    setUrl(res.data[0].url);
-    setLoaded(true);
+const getDog = async (setUrl, setIsFetched) => {
+    setUrl(DOG_API);
+    setIsFetched(true);
 }
 
 export const useAnimal = (animal) => {
     
     const [imgUrl, setImgUrl] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isFetched, setIsFetched] = useState(false);
+    const [error, setError] = useState(false);
 
-    const getImg = () => {
-        switch (animal) {
-            case 'axolotl': getAxolotl(setImgUrl, setIsLoaded); break;
-            case 'dog': getDog(setImgUrl, setIsLoaded); break;
-            case 'cat': getCat(setImgUrl, setIsLoaded); break;
+    const getImg = async () => {
+        try {
+            switch (animal) {
+                case 'axolotl': await getAxolotl(setImgUrl, setIsFetched); break;
+                case 'dog': await getDog(setImgUrl, setIsFetched); break;
+                case 'cat': await getCat(setImgUrl, setIsFetched); break;
+            }
+        }
+        catch (e) {
+            setError(true);
         }
     }
 
     const newImg = () => {
-        setIsLoaded(false);
+        setError(false);
+        setIsFetched(false);
         getImg();
     }
 
@@ -51,7 +61,8 @@ export const useAnimal = (animal) => {
     
     return {
         imgUrl,
-        isLoaded,
-        newImg
+        isFetched,
+        newImg,
+        error
     };
 }

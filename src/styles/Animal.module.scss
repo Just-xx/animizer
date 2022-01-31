@@ -1,20 +1,50 @@
 @import './variables.scss';
 
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 80ms linear, transform 120ms cubic-bezier(0, 0.96, 0, 0.98);
+}
+
 .animalImg {
-    height: 400px;
+    width: 90vw;
+    object-fit: contain;
+    max-width: 700px;
     border: 6px solid $secondary;
     box-shadow: $shadowSm;
+    background-color: $bgc;
+    height: 50px;
 }
 
 .btns {
     display: flex;
     margin-top: 30px;
+    align-items: center;
 
     > a {
         margin-left: 20px;
 
-        :first-child {
+        &:first-child {
             margin-left: 0;
+            margin-top: 0;
         }
     }
+
+    @media screen and (max-width: 500px) {
+        flex-direction: column;
+
+        & > a {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+    }
+
+
+}
+
+.fetchError {
+    color: $secondary;
+    font-weight: 700;
 }

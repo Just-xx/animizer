@@ -1,14 +1,14 @@
 ---
 import Logo from '../components/Logo.jsx';
-
-const {title} = Astro.props;
+import Background from '../components/Background.jsx';
+const {animal} = Astro.props;
 ---
     
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>{title}</title>
+	<title>Your random {animal}.</title>
 	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 	<style global lang="scss">
 		@import "../styles/global.scss";
@@ -17,7 +17,9 @@ const {title} = Astro.props;
 <body>
 	<Logo />
 	<div class="main-wrapper">
-        <slot />
+		<Background big={true}>
+			<slot />
+		</Background>
 	</div>
 </body>
 </html>

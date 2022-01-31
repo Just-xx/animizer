@@ -18,7 +18,7 @@
 .smTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: $secondary;
+    color: #302f3e;
     text-align: center;
 }
 
@@ -44,7 +44,7 @@
 
         @media screen and (max-width: 720px) {
             margin-left: 0;
-            margin-top: 20px;
+            margin-top: 12px;
         }
     }
 }

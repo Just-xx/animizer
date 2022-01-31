@@ -9,17 +9,35 @@
     margin-top: 50px;
 }
 
+.wrapperBig {
+    margin-top: 40px;
+}
+
 .contentBox {
     width: 100%;
-    min-height: 60vh;
+    min-height: 55vh;
     background-color: $primary;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.contentBoxBig {
+    min-height: 75vh;
 }
 
 .cat {
-    max-width: 80vw;
+    width: 80vw;
+    min-width: 100px;
+    max-width: 800px;
     transform: translateX(-10px);
+}
+
+.catSm {
+    width: 24vw;
+    min-width: 240px;
+    max-width: 600px;
 }
